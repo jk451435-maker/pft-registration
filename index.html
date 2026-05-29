@@ -391,20 +391,24 @@ body {
 
     <div class="field">
       <label>性別</label>
-      <div class="radio-group">
-        <label class="radio-option"><input type="radio" name="gender" value="男"> 男</label>
-        <label class="radio-option"><input type="radio" name="gender" value="女"> 女</label>
-        <label class="radio-option"><input type="radio" name="gender" value="其他"> 其他</label>
+      <select id="gender">
+        <option value="" disabled selected>請選擇...</option>
+        <option value="男">男</option>
+        <option value="女">女</option>
+      </select>
+    </div>
+
+    <div class="field"><label>姓名</label><input type="text" id="firstname" placeholder="請輸入真實姓名"></div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>出生日期</label>
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px">
+          <select id="birthYear"><option value="" disabled selected>年份</option></select>
+          <select id="birthMonth"><option value="" disabled selected>月</option></select>
+          <select id="birthDay"><option value="" disabled selected>日</option></select>
+        </div>
       </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field"><label>名字</label><input type="text" id="firstname"></div>
-      <div class="field"><label>姓氏</label><input type="text" id="lastname"></div>
-    </div>
-
-    <div class="field-row">
-      <div class="field"><label>出生日期</label><input type="text" id="birthday" placeholder="月 / 日 / 年"></div>
       <div class="field">
         <label>國籍</label>
         <select id="nationality">
@@ -432,8 +436,8 @@ body {
     <div class="field">
       <label>你是否已報名未來的 HYROX 正式賽事？</label>
       <div class="radio-group">
-        <label class="radio-option"><input type="radio" name="hyrox" value="是"> 是</label>
-        <label class="radio-option"><input type="radio" name="hyrox" value="否" checked> 否</label>
+        <option value="否" selected>否</option>
+          <option value="是">是</option>
       </div>
     </div>
 
@@ -517,10 +521,10 @@ async function submitForm() {
   const toast = document.getElementById('toast');
 
   const firstname = document.getElementById('firstname').value.trim();
-  const lastname = document.getElementById('lastname').value.trim();
+  
   const email = document.getElementById('email').value.trim();
   const lineId = document.getElementById('lineId').value.trim();
-  const gender = document.querySelector('input[name="gender"]:checked');
+  const gender = document.getElementById('gender');
   const privacyPolicy = document.getElementById('privacyPolicy').checked;
   const regulations = document.getElementById('regulations').checked;
   const howFound = document.getElementById('howFound').value;
@@ -529,7 +533,7 @@ async function submitForm() {
   toast.className = 'toast';
   toast.textContent = '';
 
-  if (!firstname || !lastname || !email || !lineId || !gender || !howFound || !runTime) {
+  if (!firstname || !email || !lineId || !gender.value || !howFound || !runTime) {
     toast.className = 'toast error';
     toast.textContent = '⚠️ 請填寫所有必填欄位';
     toast.scrollIntoView({ behavior: 'smooth' });
@@ -549,14 +553,14 @@ async function submitForm() {
     event: document.getElementById('event').value,
     gender: gender.value,
     firstname,
-    lastname,
-    birthday: document.getElementById('birthday').value,
+    
+    birthday: `${document.getElementById('birthYear').value}年${document.getElementById('birthMonth').value}月${document.getElementById('birthDay').value}日`,
     nationality: document.getElementById('nationality').value,
     email,
     country: document.getElementById('country').value,
     instagram: document.getElementById('instagram').value,
     lineId,
-    hyroxRegistered: document.querySelector('input[name="hyrox"]:checked')?.value || '否',
+    hyroxRegistered: document.getElementById('hyroxRegistered').value,
     howFound,
     runTime,
     newsletter: document.getElementById('newsletter').checked ? '同意' : '不同意',
@@ -585,6 +589,25 @@ async function submitForm() {
     btn.textContent = '送出報名';
   }
 }
+
+// Populate birthday dropdowns
+(function() {
+  const yearSel = document.getElementById('birthYear');
+  const monthSel = document.getElementById('birthMonth');
+  const daySel = document.getElementById('birthDay');
+  
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear - 10; y >= currentYear - 80; y--) {
+    yearSel.add(new Option(y, y));
+  }
+  for (let m = 1; m <= 12; m++) {
+    monthSel.add(new Option(m + '月', m));
+  }
+  for (let d = 1; d <= 31; d++) {
+    daySel.add(new Option(d + '日', d));
+  }
+})();
+
 </script>
 </body>
 </html>
