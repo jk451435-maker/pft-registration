@@ -516,44 +516,34 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4SoUZlV_SeWXAlILHo
 
 async function submitForm() {
   const btn = document.getElementById('submitBtn');
-  const toast = document.getElementById('toast');
 
   const firstname = document.getElementById('firstname').value.trim();
-  
   const email = document.getElementById('email').value.trim();
   const lineId = document.getElementById('lineId').value.trim();
-  const genderEl = document.getElementById('gender');
-  const gender = genderEl ? genderEl : null;
+  const gender = document.getElementById('gender').value;
   const privacyPolicy = document.getElementById('privacyPolicy').checked;
   const regulations = document.getElementById('regulations').checked;
   const howFound = document.getElementById('howFound').value;
   const runTime = document.getElementById('runTime').value;
 
-  toast.className = 'toast';
-  toast.textContent = '';
-
-  if (!firstname || !email || !lineId || !genderEl || !genderEl.value || !howFound || !runTime) {
-    toast.className = 'toast error';
-    toast.textContent = '⚠️ 請填寫所有必填欄位';
-    toast.scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
-  if (!privacyPolicy || !regulations) {
-    toast.className = 'toast error';
-    toast.textContent = '⚠️ 請同意隱私權政策與活動條款才能完成報名';
-    toast.scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
+  // Validate
+  if (!gender) { alert('請選擇性別'); return; }
+  if (!firstname) { alert('請填寫姓名'); return; }
+  if (!email) { alert('請填寫電子郵件'); return; }
+  if (!lineId) { alert('請填寫 LINE ID'); return; }
+  if (!howFound) { alert('請選擇你如何得知這次活動'); return; }
+  if (!runTime) { alert('請選擇預估跑步時間'); return; }
+  if (!privacyPolicy) { alert('請同意隱私權政策'); return; }
+  if (!regulations) { alert('請同意活動條款'); return; }
 
   btn.disabled = true;
   btn.textContent = '送出中...';
 
   const data = {
     event: document.getElementById('event').value,
-    gender: genderEl ? genderEl.value : '',
+    gender,
     firstname,
-    
-    birthday: `${document.getElementById('birthYear').value}年${document.getElementById('birthMonth').value}月${document.getElementById('birthDay').value}日`,
+    birthday: `${document.getElementById('birthYear').value || '未填'}年${document.getElementById('birthMonth').value || ''}月${document.getElementById('birthDay').value || ''}日`,
     nationality: document.getElementById('nationality').value,
     email,
     country: document.getElementById('country').value,
@@ -576,14 +566,12 @@ async function submitForm() {
       body: JSON.stringify(data)
     });
 
-    toast.className = 'toast success';
-    toast.textContent = '✅ 報名成功！我們會盡快透過 LINE 與你確認，感謝你的報名！';
-    toast.scrollIntoView({ behavior: 'smooth' });
     btn.textContent = '✅ 報名完成';
+    btn.style.background = '#2e7d32';
+    alert('✅ 報名成功！我們會盡快透過 LINE 與你確認，感謝你的報名！');
 
   } catch (err) {
-    toast.className = 'toast error';
-    toast.textContent = '送出失敗，請稍後再試，或直接聯絡我們的 LINE 官方帳號。';
+    alert('送出失敗，請稍後再試，或直接聯絡我們的 LINE 官方帳號。');
     btn.disabled = false;
     btn.textContent = '送出報名';
   }
