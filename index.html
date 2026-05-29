@@ -433,10 +433,10 @@ body {
 
     <div class="field">
       <label>你是否已報名未來的 HYROX 正式賽事？</label>
-      <div class="radio-group">
+      <select id="hyroxRegistered">
         <option value="否" selected>否</option>
-          <option value="是">是</option>
-      </div>
+        <option value="是">是</option>
+      </select>
     </div>
 
     <div class="field">
@@ -527,14 +527,20 @@ async function submitForm() {
   const runTime = document.getElementById('runTime').value;
 
   // Validate
-  if (!gender) { alert('請選擇性別'); return; }
-  if (!firstname) { alert('請填寫姓名'); return; }
-  if (!email) { alert('請填寫電子郵件'); return; }
-  if (!lineId) { alert('請填寫 LINE ID'); return; }
-  if (!howFound) { alert('請選擇你如何得知這次活動'); return; }
-  if (!runTime) { alert('請選擇預估跑步時間'); return; }
-  if (!privacyPolicy) { alert('請同意隱私權政策'); return; }
-  if (!regulations) { alert('請同意活動條款'); return; }
+  const missing = [];
+  if (!gender || gender === '請選擇...') missing.push('性別');
+  if (!firstname) missing.push('姓名');
+  if (!email) missing.push('電子郵件');
+  if (!lineId) missing.push('LINE ID');
+  if (!howFound) missing.push('如何得知活動');
+  if (!runTime) missing.push('預估跑步時間');
+  if (!privacyPolicy) missing.push('隱私權政策同意');
+  if (!regulations) missing.push('活動條款同意');
+  
+  if (missing.length > 0) {
+    alert('以下欄位未填寫：\n' + missing.join('\n'));
+    return;
+  }
 
   btn.disabled = true;
   btn.textContent = '送出中...';
