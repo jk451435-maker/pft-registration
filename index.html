@@ -427,7 +427,7 @@ body {
     </div>
 
     <div class="field"><label>Instagram 帳號 <span class="opt-tag">（選填）</span></label><input type="text" id="instagram" placeholder="@username"></div>
-    <div class="field"><label>LINE ID</label><input type="text" id="lineId" placeholder="@line_id"></div>
+    <div class="field"><label>LINE ID <span style="font-size:10px;color:#999;font-weight:400">（選填）</span></label><input type="text" id="lineId" placeholder="@line_id"></div>
 
     <div class="divider"></div>
 
@@ -531,7 +531,7 @@ async function submitForm() {
   if (!gender || gender === '請選擇...') missing.push('性別');
   if (!firstname) missing.push('姓名');
   if (!email) missing.push('電子郵件');
-  if (!lineId) missing.push('LINE ID');
+  
   if (!howFound) missing.push('如何得知活動');
   if (!runTime) missing.push('預估跑步時間');
   if (!privacyPolicy) missing.push('隱私權政策同意');
