@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PFT 報名表 — 反作用力訓練空間 × HYROX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue: #2a3897;
+  --blue-dark: #1e2a6e;
+  --blue-light: #3d4fad;
+  --yellow: #eabd18;
+  --yellow-dark: #c9a214;
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --text-secondary: #555;
+  --border: #d0d5e8;
+  --input-bg: #f8f9fc;
+  --green: #2e7d32;
+  --red: #c62828;
+}
+body {
+  background: var(--bg);
+  font-family: 'Noto Sans TC', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+}
+.header {
+  background: var(--blue-dark);
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(30,42,110,0.3);
+}
+.brand-logo {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.divider-dot { color: var(--yellow); font-size: 18px; }
+.hyrox-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.3em;
+  color: #aab4d8;
+}
+.page-banner {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, #3a4fb0 100%);
+  padding: 48px 28px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.page-banner::before {
+  content: 'HYROX';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 120px;
+  color: rgba(255,255,255,0.04);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+}
+.yellow-bar {
+  width: 40px;
+  height: 4px;
+  background: var(--yellow);
+  border-radius: 2px;
+  margin-bottom: 14px;
+}
+.page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: #fff;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.page-sub {
+  font-size: 13px;
+  color: #aab4d8;
+  letter-spacing: 0.02em;
+}
+.form-wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+.section-card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(42,56,151,0.07);
+}
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 3px;
+  letter-spacing: 0.02em;
+}
+.section-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+.field { margin-bottom: 15px; }
+.field:last-child { margin-bottom: 0; }
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+.field input, .field select {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  font-size: 14px;
+  padding: 11px 13px;
+  font-family: 'Noto Sans TC', sans-serif;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+.field input:focus, .field select:focus {
+  outline: none;
+  border-color: var(--blue-light);
+  box-shadow: 0 0 0 3px rgba(42,56,151,0.08);
+}
+.field input::placeholder { color: #bbb; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.radio-group { display: flex; gap: 22px; margin-top: 7px; flex-wrap: wrap; }
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text);
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.radio-option input[type="radio"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--blue);
+  cursor: pointer;
+  margin: 0;
+}
+.event-card {
+  background: linear-gradient(135deg, var(--blue-dark), #2a3897);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-top: 12px;
+}
+.event-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #c8cef0;
+  margin: 6px 0;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.event-icon { color: var(--yellow); font-size: 14px; }
+.plan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+.plan-box { border-radius: 10px; padding: 14px; }
+.plan-a {
+  background: rgba(234,189,24,0.13);
+  border: 1.5px solid rgba(234,189,24,0.35);
+}
+.plan-b {
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.12);
+}
+.plan-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--yellow);
+  margin-bottom: 5px;
+  letter-spacing: 0.03em;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.plan-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.plan-item {
+  font-size: 11px;
+  margin: 4px 0;
+  font-family: 'Noto Sans TC', sans-serif;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+.plan-item.yes { color: #8ecb8e; }
+.plan-item.no { color: #4a4a5a; text-decoration: line-through; }
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 6px 0 16px;
+}
+.consent-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+}
+.toggle-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.toggle-row:last-child { margin-bottom: 0; }
+.toggle {
+  position: relative;
+  width: 44px;
+  min-width: 44px;
+  height: 24px;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: #d0d5e8;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.toggle input:checked + .toggle-slider { background: var(--blue); }
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.toggle input:checked + .toggle-slider::after { transform: translateX(20px); }
+.toggle-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.toggle-label strong {
+  color: var(--text);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+.toggle-label em { font-style: italic; font-size: 12px; color: #888; }
+.toggle-label a { color: var(--blue-light); }
+.opt-tag { font-size: 10px; color: #999; font-weight: 400; margin-left: 4px; }
+.toast {
+  display: none;
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.toast.success { display: block; background: #e8f5e9; color: var(--green); border: 1.5px solid #a5d6a7; }
+.toast.error { display: block; background: #ffebee; color: var(--red); border: 1.5px solid #ef9a9a; }
+.register-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  margin-top: 8px;
+  font-family: 'Noto Sans TC', sans-serif;
+  transition: background 0.15s, transform 0.1s;
+}
+.register-btn:hover { background: var(--blue-light); transform: translateY(-1px); }
+.register-btn:active { transform: translateY(0); }
+.register-btn:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+.footer-note {
+  text-align: center;
+  padding: 24px;
+  font-size: 11px;
+  color: #aaa;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.footer-note a { color: #bbb; text-decoration: none; }
+@media (max-width: 480px) {
+  .field-row { grid-template-columns: 1fr; }
+  .plan-grid { grid-template-columns: 1fr; }
+  .page-title { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand-logo">反作用力訓練空間</div>
+  <div class="divider-dot">×</div>
+  <div class="hyrox-name">HYROX</div>
+</div>
+
+<div class="page-banner">
+  <div class="yellow-bar"></div>
+  <div class="page-title">PFT 報名表</div>
+  <div class="page-sub">HYROX Physical Fitness Test　｜　2026年7月25日（週六）</div>
+</div>
+
+<div class="form-wrap">
+  <div id="toast" class="toast"></div>
+
+  <!-- 活動資訊 -->
+  <div class="section-card">
+    <div class="section-title">活動資訊</div>
+    <div class="section-sub">請確認報名場次與方案</div>
+    <div class="field">
+      <label>場次</label>
+      <select id="event">
+        <option>2026/07/25　反作用力 PFT　高雄</option>
+      </select>
+    </div>
+    <div class="event-card">
+      <div class="event-row"><span class="event-icon">📍</span> 反作用力訓練空間</div>
+      <div class="event-row"><span class="event-icon">🏢</span> 高雄市鼓山區美術東五路61號 2F</div>
+      <div class="event-row"><span class="event-icon">📅</span> 2026年7月25日（週六）</div>
+      <div class="event-row"><span class="event-icon">🕘</span> 09:00 – 12:00</div>
+      <div class="plan-grid">
+        <div class="plan-box plan-a">
+          <div class="plan-name">PFT 備賽會籍</div>
+          <div class="plan-price">NT$1,200</div>
+          <div class="plan-item yes">✅ 6月無限次進館訓練</div>
+          <div class="plan-item yes">✅ 4週備賽訓練計畫</div>
+          <div class="plan-item yes">✅ 7/25 PFT 測驗資格</div>
+        </div>
+        <div class="plan-box plan-b">
+          <div class="plan-name">單次報名</div>
+          <div class="plan-price">NT$700</div>
+          <div class="plan-item no">✗ 進館訓練資格</div>
+          <div class="plan-item no">✗ 備賽訓練計畫</div>
+          <div class="plan-item yes">✅ 7/25 PFT 測驗資格</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 個人資料 -->
+  <div class="section-card">
+    <div class="section-title">個人資料</div>
+    <div class="section-sub">請填寫真實資料以完成報名</div>
+
+    <div class="field">
+      <label>性別</label>
+      <div class="radio-group">
+        <label class="radio-option"><input type="radio" name="gender" value="男"> 男</label>
+        <label class="radio-option"><input type="radio" name="gender" value="女"> 女</label>
+        <label class="radio-option"><input type="radio" name="gender" value="其他"> 其他</label>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>名字</label><input type="text" id="firstname"></div>
+      <div class="field"><label>姓氏</label><input type="text" id="lastname"></div>
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>出生日期</label><input type="text" id="birthday" placeholder="月 / 日 / 年"></div>
+      <div class="field">
+        <label>國籍</label>
+        <select id="nationality">
+          <option>🇹🇼 台灣</option><option>🇯🇵 日本</option><option>🇺🇸 美國</option>
+          <option>🇰🇷 韓國</option><option>🇩🇪 德國</option><option>其他</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field"><label>電子郵件</label><input type="email" id="email"></div>
+
+    <div class="field">
+      <label>居住國家</label>
+      <select id="country">
+        <option>🇹🇼 台灣</option><option>🇯🇵 日本</option><option>🇺🇸 美國</option>
+        <option>🇰🇷 韓國</option><option>🇩🇪 德國</option><option>其他</option>
+      </select>
+    </div>
+
+    <div class="field"><label>Instagram 帳號 <span class="opt-tag">（選填）</span></label><input type="text" id="instagram" placeholder="@username"></div>
+    <div class="field"><label>LINE ID</label><input type="text" id="lineId" placeholder="@line_id"></div>
+
+    <div class="divider"></div>
+
+    <div class="field">
+      <label>你是否已報名未來的 HYROX 正式賽事？</label>
+      <div class="radio-group">
+        <label class="radio-option"><input type="radio" name="hyrox" value="是"> 是</label>
+        <label class="radio-option"><input type="radio" name="hyrox" value="否" checked> 否</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>你如何得知這次活動？</label>
+      <select id="howFound">
+        <option value="" disabled selected>請選擇...</option>
+        <option>社群媒體（IG / Facebook）</option>
+        <option>朋友或家人介紹</option>
+        <option>Google 搜尋</option>
+        <option>HYROX 官網</option>
+        <option>健身房 / 教練推薦</option>
+        <option>其他</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>預估 1000m 跑步時間</label>
+      <select id="runTime">
+        <option value="" disabled selected>請選擇...</option>
+        <option>4–5 分鐘（快跑組）</option>
+        <option>6–7 分鐘（慢跑組）</option>
+        <option>8 分鐘以上（慢跑組）</option>
+        <option>不確定</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 同意聲明 -->
+  <div class="section-card">
+    <div class="consent-title">同意聲明</div>
+
+    <div class="toggle-row">
+      <label class="toggle"><input type="checkbox" id="newsletter"><span class="toggle-slider"></span></label>
+      <div class="toggle-label">
+        <strong>電子報 <span class="opt-tag">（選填）</span></strong>
+        我同意接收來自 HYROX 及合作夥伴的最新消息與活動資訊。
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <label class="toggle"><input type="checkbox" id="publicRanking"><span class="toggle-slider"></span></label>
+      <div class="toggle-label">
+        <strong>公開排名 <span class="opt-tag">（選填）</span></strong>
+        我同意在公開排名中顯示我的姓名。<br>
+        <em>若不同意，你的成績仍會出現在排名中，但姓名將以「匿名」替代。</em>
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <label class="toggle"><input type="checkbox" id="privacyPolicy"><span class="toggle-slider"></span></label>
+      <div class="toggle-label">
+        <strong>隱私權政策</strong>
+        我已閱讀並同意<a href="#">隱私權政策</a>，並希望以電子郵件收到成績通知。
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <label class="toggle"><input type="checkbox" id="regulations"><span class="toggle-slider"></span></label>
+      <div class="toggle-label">
+        <strong>活動條款</strong>
+        我已閱讀並同意本次活動的相關條款與規定。<br>
+        <a href="#">閱讀活動條款</a>
+      </div>
+    </div>
+  </div>
+
+  <button class="register-btn" id="submitBtn" onclick="submitForm()">送出報名</button>
+
+  <div class="footer-note">
+    <a href="#">聲明</a> · <a href="#">隱私權政策</a><br>
+    反作用力訓練空間 × UPSOLUTS SPORTS GmbH
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4SoUZlV_SeWXAlILHoYi0CBK0bDXYQJp2wuOyqVD_kg5p-zoyR_00LWhDo7ZokB16ag/exec';
+
+async function submitForm() {
+  const btn = document.getElementById('submitBtn');
+  const toast = document.getElementById('toast');
+
+  const firstname = document.getElementById('firstname').value.trim();
+  const lastname = document.getElementById('lastname').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const lineId = document.getElementById('lineId').value.trim();
+  const gender = document.querySelector('input[name="gender"]:checked');
+  const privacyPolicy = document.getElementById('privacyPolicy').checked;
+  const regulations = document.getElementById('regulations').checked;
+  const howFound = document.getElementById('howFound').value;
+  const runTime = document.getElementById('runTime').value;
+
+  toast.className = 'toast';
+  toast.textContent = '';
+
+  if (!firstname || !lastname || !email || !lineId || !gender || !howFound || !runTime) {
+    toast.className = 'toast error';
+    toast.textContent = '⚠️ 請填寫所有必填欄位';
+    toast.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  if (!privacyPolicy || !regulations) {
+    toast.className = 'toast error';
+    toast.textContent = '⚠️ 請同意隱私權政策與活動條款才能完成報名';
+    toast.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '送出中...';
+
+  const data = {
+    event: document.getElementById('event').value,
+    gender: gender.value,
+    firstname,
+    lastname,
+    birthday: document.getElementById('birthday').value,
+    nationality: document.getElementById('nationality').value,
+    email,
+    country: document.getElementById('country').value,
+    instagram: document.getElementById('instagram').value,
+    lineId,
+    hyroxRegistered: document.querySelector('input[name="hyrox"]:checked')?.value || '否',
+    howFound,
+    runTime,
+    newsletter: document.getElementById('newsletter').checked ? '同意' : '不同意',
+    publicRanking: document.getElementById('publicRanking').checked ? '同意' : '不同意',
+    privacyPolicy: '同意',
+    regulations: '同意',
+  };
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    toast.className = 'toast success';
+    toast.textContent = '✅ 報名成功！我們會盡快透過 LINE 與你確認，感謝你的報名！';
+    toast.scrollIntoView({ behavior: 'smooth' });
+    btn.textContent = '✅ 報名完成';
+
+  } catch (err) {
+    toast.className = 'toast error';
+    toast.textContent = '送出失敗，請稍後再試，或直接聯絡我們的 LINE 官方帳號。';
+    btn.disabled = false;
+    btn.textContent = '送出報名';
+  }
+}
+</script>
+</body>
+</html>
