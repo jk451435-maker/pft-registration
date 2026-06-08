@@ -388,12 +388,16 @@ body {
             <td style="text-align:center">✅</td>
           </tr>
         </table>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+          <button onclick="selectPlan('A')" id="btn-a" style="padding:12px;background:#eabd18;color:#1a1a2e;font-size:14px;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">選擇 PFT 備賽會籍</button>
+          <button onclick="selectPlan('B')" id="btn-b" style="padding:12px;background:rgba(255,255,255,0.15);color:#fff;font-size:14px;font-weight:700;border:1.5px solid rgba(255,255,255,0.3);border-radius:8px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">選擇 單次報名</button>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- 個人資料 -->
-  <div class="section-card">
+  <div class="section-card" id="form-body" style="display:none">
     <div class="section-title">個人資料</div>
     <div class="section-sub">請填寫真實資料以完成報名</div>
 
@@ -473,7 +477,7 @@ body {
   </div>
 
   <!-- 同意聲明 -->
-  <div class="section-card">
+  <div class="section-card" id="form-consent" style="display:none">
     <div class="consent-title">同意聲明</div>
 
     <div class="toggle-row">
@@ -511,7 +515,7 @@ body {
     </div>
   </div>
 
-  <button class="register-btn" id="submitBtn" onclick="submitForm()">送出報名</button>
+  <button class="register-btn" id="submitBtn" onclick="submitForm()" style="display:none">送出報名</button>
 
   <div class="footer-note">
     <a href="#">聲明</a> · <a href="https://jk451435-maker.github.io/pft-registration/privacy.html" target="_blank">隱私權政策</a><br>
@@ -520,7 +524,7 @@ body {
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3nPRCtZLqN2TLFMP3qToX0HgI08uocc60yfFOvGMg0wlP7CVWE8f96Qpu7uvDvxiCuw/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT-qSfMm0xsZZufZEcluhiorOuTDVB7wQAeSnvjc27JACAwBLMlbx-x_6Oqh00v7Pi2g/exec';
 
 async function submitForm() {
   const btn = document.getElementById('submitBtn');
@@ -536,6 +540,7 @@ async function submitForm() {
 
   // Validate
   const missing = [];
+  if (!window._selectedPlan) { alert('請先選擇參加方案'); return; }
   if (!gender || gender === '請選擇...') missing.push('性別');
   if (!firstname) missing.push('姓名');
   if (!email) missing.push('電子郵件');
@@ -555,6 +560,7 @@ async function submitForm() {
 
   const data = {
     event: document.getElementById('event').value,
+    plan: window._selectedPlan === 'A' ? 'PFT備賽會籍 NT$1,200' : '單次報名 NT$700',
     gender,
     firstname,
     birthday: `${document.getElementById('birthYear').value || '未填'}年${document.getElementById('birthMonth').value || ''}月${document.getElementById('birthDay').value || ''}日`,
@@ -608,6 +614,44 @@ async function submitForm() {
     daySel.add(new Option(d + '日', d));
   }
 })();
+
+
+function selectPlan(plan) {
+  // Update hidden field
+  window._selectedPlan = plan;
+  
+  // Update button styles
+  const btnA = document.getElementById('btn-a');
+  const btnB = document.getElementById('btn-b');
+  
+  if (plan === 'A') {
+    btnA.style.background = '#eabd18';
+    btnA.style.color = '#1a1a2e';
+    btnA.style.border = 'none';
+    btnA.textContent = '✅ PFT 備賽會籍 已選擇';
+    btnB.style.background = 'rgba(255,255,255,0.1)';
+    btnB.style.color = '#aab4d8';
+    btnB.style.border = '1.5px solid rgba(255,255,255,0.2)';
+    btnB.textContent = '選擇 單次報名';
+  } else {
+    btnB.style.background = '#eabd18';
+    btnB.style.color = '#1a1a2e';
+    btnB.style.border = 'none';
+    btnB.textContent = '✅ 單次報名 已選擇';
+    btnA.style.background = 'rgba(255,255,255,0.1)';
+    btnA.style.color = '#aab4d8';
+    btnA.style.border = '1.5px solid rgba(255,255,255,0.2)';
+    btnA.textContent = '選擇 PFT 備賽會籍';
+  }
+  
+  // Show form
+  document.getElementById('form-body').style.display = 'block';
+  document.getElementById('form-consent').style.display = 'block';
+  document.getElementById('submitBtn').style.display = 'block';
+  
+  // Smooth scroll to form
+  document.getElementById('form-body').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 </script>
 </body>
